@@ -62,3 +62,137 @@ della memorizzazione e gestione dei dati.
   \item \textbf{controllo della concorrenza:} per evitare che accessi
     concorrenti alla base di dati provochino inconsistenze dei dati.
 \end{itemize}
+
+\subsection{Modelli dei dati}%
+\label{sub:Modelli dei dati}
+Una delle caratteristiche principali di un DBMS è di poter disporre di una
+rappresentazione logica ad alto livello dei dati, i \emph{modelli di dati}
+astraggono i dati presenti nel sistema per essere utilizzati più semplicemente
+da utenti ed applicazioni.
+
+\subsubsection{Concetti di base}%
+\label{ssub:Concetti di base}
+Un \emph{modello di dati} è un formalismo che racchiude tre componenti
+fondamentali:
+\begin{itemize}
+  \item un insieme di strutture dati;
+  \item un linguaggio per specificare, aggiornare e vincolare le strutture dati
+    previste dal modello;
+  \item un linguaggio per manipolare i dati.
+\end{itemize}
+
+\paragraph{Struttura dati}%
+\label{par:Struttura dati}
+Ad modello di dati corrisponde una struttura dati, composta da:
+\begin{itemize}
+  \item \textbf{entità:} insieme di oggetti della realtà applicativa di
+    interesse, aventi caratteristiche comuni;
+  \item \textbf{istanza di entità:} singolo oggetto della realtà applicativa di
+    interesse, modellato da una certa entità;
+  \item \textbf{attributo:} proprietà significativa di un entità, ai fini della
+    descrizione della realtà applicativa di interesse (ogni entità è
+    caratterizzata da uno o più attributi), un attributo di un entità assume uno
+    o più valori per ciascuna delle istanze dell'entità, detti \textit{valori
+    dell'attributo}, in un insieme di possibili valori, detto \textit{dominio
+    dell'attributo};
+  \item \textbf{associazione:} corrispondenza tra un certo numero di entità,
+    anche le associazioni possono avere degli attributi che corrispondono alle
+    proprietà delle associazioni;
+  \item \textbf{istanza di associazione:} corrispondenza tra le istanze di un
+    certo numero di entità.
+\end{itemize}
+
+\subsection{Modello relazionale}%
+\label{par:Modello relazionale}
+Il modello relazionale è basato su di una singola struttura dati, la relazione.
+Una relazione viene solitamente rappresentata come una tabella con righe (dette
+tuple) e colonne contenenti dati di tipo specificato.
+
+Una tupla tipicamente rappresenta un'istanza dell'entità modellata dalla tabella
+a cui la tupla appartiene, mentre la colonna di una tabella rappresenta un
+particolare attributo dell'entità modellata dalla tabella stessa.
+
+Attributi con la proprietà di identificare univocamente le tuple di una
+relazione vengono chiamati \textit{chiavi}, mentre i corrispondenti attributi
+nell'altra relazione, prendono il nome di \textit{chiavi esterne}.
+
+\subsection{Schemi ed istanze}%
+\label{ssub:Schemi ed istanze}
+In un DBMS individuiamo lo \textit{schema della base di dati} e l'
+\textit{istanza della base di dati}.
+
+Lo schema fornisce una descrizione dei dati per tipo, l'istanza è l'insieme
+delle tuple contenute nella base di dati.
+
+\subsection{Livelli nella rappresentazione dei dati}%
+\label{ssub:Livelli nella rappresentazione dei dati}
+Uno degli scopi di un DBMS è di fornire una rappresentazione ad alto livello di
+un insieme di dati nascondendone l'effettiva memorizzazione, per cui la base di
+dati fornisce tre livelli diversi di visualizzazione/astrazione:
+\begin{itemize}
+  \item \textbf{livello fisico:} il livello più basso con cui viene definito lo
+    schema fisico della base di dati, precisando come i dati sono effettivamente
+    memorizzati tramite strutture di memorizzazione;
+  \item \textbf{livello logico:} il secondo livello di astrazione in cui viene
+    decritto lo \textit{schema logico}, ovvero quali sono i dati memorizzati
+    nella base di dati, eventuali associazione tra di essi ed eventuali vincoli
+    di integrità semantica e di autorizzazione, l'intera base di dati è
+    descritta tramite un numero limitato di strutture dati che costituiscono il
+    modello dei dati;
+  \item \textbf{livello esterno:} è il livello di astrazione più alto, descrive
+    una porzione dell'intero schema della base di dati, possono essere definite
+    più viste di una stessa base di dati.
+\end{itemize}
+
+La presenza di questi livelli di astrazione assicura alcune importanti proprietà
+ai datim l' \textbf{indipendenza fisica} e l' \textbf{indipendenza logica}.
+
+Il concetto di indipendenza fisica esprime la possibilità di interagire con il
+livello logico senza apportare modifiche al livello fisico.
+
+Il concetto di indipendenza logica consente la possibilità di interagire con il
+livello esterno senza apportare modifiche al livello logico.
+
+\subsection{Linguaggi di un DBMS}%
+\label{ssub:Linguaggi di un DBMS}
+I DBMS mettono a disposizione un insieme di linguaggi che permettono agli utenti
+di interagire con il DBMS per descrivere e manipolare i dati di interesse e
+specificare vincoli, tra questi i linguaggi più rilevanti sono:
+
+\paragraph{DDL - Data Definition Language}%
+\label{par:DDL - Data Definition Language}
+Il linguaggio di definizione dei dati consente di specificare ed aggiornare lo
+schema di una base di dati, in particolare il DDL concretizza il modello dei
+dati fornendo la notazione che permette di specificarne le strutture dati.
+
+Il DDL deve supportare la specifica del nome della base di dati, come pure di
+tutte le unità logiche elementari della base di dati e di eventuali vincoli di
+integrità semantica e di autorizzazione prevedendo comandi per l'aggiornamento
+delle strutture dati previste dal modello.
+
+Per quanto concerne i linguaggio di manipolazione dei dati si distingue tra
+\emph{linguaggi procedurali (operazionali)} e \emph{linguaggi non procedurali
+(dichiarativi)} per esempio \textbf{SQL}.
+
+\paragraph{DML - Data Manipulation Language}%
+\label{par:DML - Data Manipulation Language}
+Una base di dati, organizzata logicamente tramite il modello dei dati e definita
+tramite il DDL è accessibile agli utenti ed alle applicazioni tramite il DML.
+Le operazioni fornite da questo linguaggio servono per gestire le istanze della
+base di dati e sono fondamentalmente quattro:
+\begin{itemize}
+  \item \textbf{inserimento:} per l'immisione di nuovi dati;
+  \item \textbf{ricerca:} per il ritrovamento dei dati in interesse, detta
+    interrogazione (\textit{query});
+  \item \textbf{cancellazione:} per l'eliminazione di dati obsoleti;
+  \item \textbf{modifica:} per variare dati esistenti.
+\end{itemize}
+
+\paragraph{SDL - Storage Definition Language}%
+\label{par:SDL - Storage Definition Language}
+La corrispondenza tra le strutture logiche e le strutture di memorizzazione deve
+essere opportunamente definita.
+Nella maggior parte dei DBMS attuali la definizione di tale corrispondenza è
+eseguita automaticamente dal DBMS stesso una volta che lo schema logico è
+definito, tuttavia l'utente può influenzare le scelte operate dal DBMS tramite i
+comandi del linguaggio di definizione delle strutture di memorizzazione.
