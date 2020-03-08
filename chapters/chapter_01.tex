@@ -14,10 +14,51 @@ alla gestione e salvataggio di dati, quali:
     dati, integrazione con i linguaggi di programmazione e funzionalità
     reattive;
   \item \textbf{problemi nell'accesso concorrente ai dati}, operazioni multiple
-    sullo stesso dato possono causare problemi di concorrenza, i \emph{DMBS}
+    sullo stesso dato possono causare problemi di concorrenza, i \emph{DBMS}
     mettono a disposizione il concetto di \textit{transazione}, che garantisce
     la consistenza dei dati in presenza di transazioni concorrenti;
   \item \textbf{problemi di integrità dei dati}, i \emph{DBMS} forniscono la
     possibilità di stabilire dei vincoli al salvataggio ed alla modifica dei
     dati, preservandone l'integrità.
+\end{itemize}
+
+\subsection{Obiettivi e servizi di un DBMS}%
+\label{sub:Obiettivi e servizi di un DBMS}
+I DBMS implementano una serie di servizi per offrire l'utilizzo della base di
+dati e lo sviluppo di applicazioni con cui si interfacciano, alcuni sono
+invocabili dagli utenti, altri sono utilizzati per il funzionamento interno.
+
+I DBMS adottano un'\textit{architettura client-server}, per cui le funzionalità
+del sistema sono realizzate da due moduli distinti: il \textbf{client} che
+gestisce l'interazione tra utente e DBMS ed il \textbf{server} che si occupa
+della memorizzazione e gestione dei dati.
+
+\subsubsection{Principali servizi offerti da un DBMS}%
+\label{ssub:Principali servizi offerti da un DBMS}
+\begin{itemize}
+  \item \textbf{Descrizione dei dati:} per specificare i dati da memorizzare
+    nella base di dati;
+  \item \textbf{manipolazione dei dati, per:}
+    \begin{itemize}
+      \item accedere ai dati;
+      \item inserire nuovi dati;
+      \item modificare dati esistenti;
+      \item cancellare dati esistenti;
+    \end{itemize}
+  \item \textbf{controllo di integrità:} per evitare di memorizzare dati non
+    corretti;
+  \item \textbf{strutture di memorizzazione:} per rappresentare in memoria
+    secondaria i costrutti del modello dei dati;
+  \item \textbf{ottimizzazione di interrogazioni:} per determinare la strategia
+    più efficiente per accedere ai dati;
+  \item \textbf{protezione dei dati:} per proteggere i dati da accessi non
+    autorizzati;
+  \item \textbf{ripristino della base di dati}, per evitare che errori e
+    malfunzionamenti:
+    \begin{itemize}
+      \item determinino una base di dati inconsistente;
+      \item provochino perdite di dati;
+    \end{itemize}
+  \item \textbf{controllo della concorrenza:} per evitare che accessi
+    concorrenti alla base di dati provochino inconsistenze dei dati.
 \end{itemize}
