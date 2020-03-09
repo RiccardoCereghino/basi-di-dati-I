@@ -1,0 +1,102 @@
+\chapter{Modello relazionale}%
+\label{cha:Modello relazionale}
+
+\section{Modello dei dati}%
+\label{sec:Modello dei dati}
+Il modello relazionale è stato proposto da \emph{E.F. CODD} nel 1970.
+
+Le interrogazioni sulle relazioni possono essere espresse in due formalismi:
+\begin{itemize}
+  \item \textbf{algebra relazionale:} in cui le interrogazioni sono espresse
+    applicando operatori specializzati alle relazioni;
+  \item \textbf{calcolo relazionale:} in cui le interrogazioni sono espresse per
+    mezzo di formule logiche che devono essere verificate dalle tuple ottenute
+    come risposta all'interrogazione.
+\end{itemize}
+
+\subsection{Relazioni}%
+\label{sub:Relazioni}
+Il concetto alla base del modello relazionale è la \textit{relazione}, definita
+partendo dalla nozione di dominio, un dominio è un insieme anche infinito di
+valori.
+
+Sia $\D$ l'insieme di tutti i domini, che assumeremo contenere i tipi:
+\begin{itemize}
+  \item \textbf{int:} numeri interi;
+  \item \textbf{real:} numeri reali;
+  \item \textbf{string:} stringhe;
+  \item \textbf{date:} date.
+\end{itemize}
+
+I valori dei domini costituiscono i valori atomici che popleranno la base di
+dati, a partire dai quali vengono costruite le \emph{tuple} delle relazioni,
+effeuando un prodotto cartesiano di tali valori.
+
+\begin{definizione}[Prodotto cartesiano]
+Siano $D_1,D_2,\dots,D_k\in\D$ \emph{k} domini.
+Il prodotto cartesiano di tali domini, indicato con $D_1\times
+D_2\times\dots\times D_k$ è definito come l'insieme:
+\[
+  \{(v_1,v_2,\dots,v_k)|v_1\in\D_1,\dots,v_k\in\D_k\}
+\]
+Gli elementi appartenenti al prodotto cartesiano sono detti \textbf{tuple}; il
+prodotto cartesiano di \emph{k} domini ha grado \emph{k}.
+\end{definizione}
+
+\begin{definizione}[Relazione]
+Siano $D_1,D_2,\dots,D_k\in\D$ \emph{k} domini.
+Una relazione su $D_1,D_2,\dots,D_k\in\D$ è un sottoinsieme finito del prodotto
+cartesiano $D_1\times D_2\times\dots\times D_k$.
+\end{definizione}
+
+\subsubsection{Nomenclatura}%
+\label{ssub:Nomenclatura}
+\begin{itemize}
+  \item \textbf{Relazione:} sottonsieme del prodotto cartesiano di $k$ domini,
+    ha grado $k$;
+  \item \textbf{tupla:} ogni tupla di una relazione di grado $k$ ha $k$
+    componenti, uno per ogni dominio su cui è definita la relazione cui la tupla
+    appartiene.
+  \item \textbf{componente:} data una relazione $R$ di grado $k$, una tupla
+    $t\in\R$ ed un intero $i\in\{1,\dots,k\}$, la notazione $t[i]$ denota la
+    $i$-esima componente di $t$;
+  \item \textbf{cardinalità:} esprime il numero di tuple appartenenti alla
+    relazione, una relazione è sempre un insieme finito;
+  \item \textbf{attributo:} un'alternativa alla formulazione del modello
+    relazionale è di associare un nome, detto \emph{nome di attributo} ad ogni
+    componente delle tuple in una relazione.
+\end{itemize}
+
+\begin{definizione}[Schema di relazione]
+  Siano $R$ un nome di relazione, $\{A_1,\dots,A_n\}$ un insieme di nomi di
+  attributi, $\dom:\{A_1,\dots,A_n\}\rightarrow\D$ una funzione totale che
+  associa ad ogni nome di attributo in $\{A_1,\dots,A_n\}$ il corrispondente
+  dominio.
+
+  La coppia $(R(A_1,\dots,A_n),\dom)$ è uno schema di relazione.
+  $U_R$ denota l'insieme dei nomi di attributi di $R$ cioè
+  $\{\{A_1,\dots,A_n\}\}$.
+\end{definizione}
+
+\begin{definizione}[Schema di base di dati]
+Siano $S_1,\dots,S_n$ schemi di relazioni, con nomi di relazione diversi,
+$S=\{S_1,\dots,S_n\}$ è detto schema di base di dati.
+\end{definizione}
+
+\begin{definizione}[Tupla e relazione]
+Sia $R(A_1,\dots,A_n),\dom)$ uno schema di relazione.
+
+Una tupla $t$ definita su $R$ è un insieme di funzioni totali $f_1,\dots,f_n$,
+dove $f_i:A_i\rightarrow\dom)A_i),i=1,\dots,n$, associa all'attributo di nome
+$A_i$ un valore del dominio di tale attributo.
+Una relazione definita su uno schema di relazione è un insieme finito di tuple
+definite su tale schema; tale relazione è anche detta \emph{istanza dello
+schema}.
+\end{definizione}
+
+\subsection{Valori nulli}%
+\label{sub:Valori nulli}
+Il valore nullo è un valore ammissibile per ogni dominio, rappresenta la
+mancanza di un valore di una tupla.
+
+Denotiamo il valore nullo con il simbolo $?$.

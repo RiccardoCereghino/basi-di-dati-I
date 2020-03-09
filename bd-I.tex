@@ -39,11 +39,11 @@
 
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{ntheorem}
 \usepackage{float}
 \usepackage{tikz}
 
 \let\numberset\mathbb
+\newcommand{\D}{\numberset{D}}
 \newcommand{\N}{\numberset{N}}
 \newcommand{\Z}{\numberset{Z}}
 \newcommand{\Q}{\numberset{Q}}
@@ -60,11 +60,15 @@
 \newcommand{\cc}{\mathcal{C}}
 \newcommand{\dd}{\mathrm{d}}
 
+\usepackage{ntheorem}
+\newtheorem{definizione}{Definizione}
 
 \begin{document}
-
 \include{cover}
 \pagestyle{plain}
 \include{contents}
+
 \include{chapters/chapter_01}
+\include{chapters/chapter_02}
+\include{chapters/chapter_03}
 \end{document}
