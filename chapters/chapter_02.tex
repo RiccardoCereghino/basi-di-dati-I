@@ -84,7 +84,7 @@ $S=\{S_1,\dots,S_n\}$ è detto schema di base di dati.
 \end{definizione}
 
 \begin{definizione}[Tupla e relazione]
-Sia $R(A_1,\dots,A_n),\dom)$ uno schema di relazione.
+  Sia $R((A_1,\dots,A_n),\dom)$ uno schema di relazione.
 
 Una tupla $t$ definita su $R$ è un insieme di funzioni totali $f_1,\dots,f_n$,
 dove $f_i:A_i\rightarrow\dom)A_i),i=1,\dots,n$, associa all'attributo di nome
@@ -100,3 +100,63 @@ Il valore nullo è un valore ammissibile per ogni dominio, rappresenta la
 mancanza di un valore di una tupla.
 
 Denotiamo il valore nullo con il simbolo $?$.
+
+\subsection{Chiavi}%
+\label{sub:Chiavi}
+Una chiave di una relazione è un insieme di attributi che distingue fra loro le
+tuple della relazione.
+
+\begin{definizione}[Chiave e super-chiave]
+Sia $R(A_1,\dots,A_n)$ uno schema di relazione.
+
+Un insieme $X\subseteq U_R$ di attributu di $R$ è chiave di $R$ se verifica
+entrambe le seguenti proprietà:
+\begin{enumerate}
+  \item qualsiasi sia lo stato di $R$, non esistono due tuple distinte di $R$
+    che abbiano lo stesso valore per tutti gli attributi in $X$;
+  \item nessun sottoinsieme proprio di $X$ verifica la prima proprietà.
+\end{enumerate}
+Un insieme di attributi che verifica la prima proprietà, ma non la seconda è
+detto \emph{super-chiave} di $R$.
+\end{definizione}
+
+Una relazione puà avere più di un insieme $S$ di attributi che verificano le due
+proprietà, in tale caso si usa il termine \emph{chiavi candidate} per indicare
+tutte queste chiavi.
+
+Nel caso una relazione abbia più chiavi candidate, è possibile selezionare tra
+queste una \emph{chiave primaria}, le chiavi restanti si dicono \emph{chiavi
+alternative}.
+
+Per fare riferimento ad una tuple è possibile usare qualunque chiave, ma è
+preferibile utilizzare la primaria dato che i DBMS ottimizza le operazioni.
+
+\subsubsection{Chiavi esterne}%
+\label{ssub:Chiavi esterne}
+Nel modello relazionale è possibile specificare relazioni utilizzando chiavi
+esterne.
+
+Le chiavi esterne permettono di collegare tra loro tuple di relazioni diverse e
+costituiscono un meccanismo per realizzare tali associazioni.
+L'approccio alla modellazione delle associazioni basato su chiavi esterne è
+detto \emph{per valore}.
+
+\begin{definizione}[Chiave esterna]
+Siano $R$ ed $R^\prime$ due relazioni, sia $Y\subseteq U_R^\prime$ una chiave
+per $R^\prime$ e sia $X\subseteq U_R$ un insieme di attributi di $R$ tale che
+$Y$ ed $X$ contengano lo stesso numero di attributi e di dominio compatibile.
+
+$X$ è una chiave esterna di $R$ su $R^\prime$ sem qualsiasi siano gli stati di
+$R$ ed $R^\prime$, per ogni tupla $t$ di $R$ esiste una tupla $t^\prime$ di
+$R^\prime$ tale che $t[X]=t^\prime[Y]$.
+$R$ viene detta relazione referente ed $R^\prime$ viene detta relazione
+riferita.
+\end{definizione}
+
+\paragraph{Integrità referenziale}%
+\label{par:Integrità referenziale}
+Il vincolo di integrità semantica che assicura il riferimento della referente su
+una referita si dice \emph{vincolo di integrità referenziale}.
+
+Può essere violata da inserimenti e modifiche nella relazione referente e da
+cancellazioni e modifiche nella relazione riferita.
