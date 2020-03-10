@@ -1,0 +1,90 @@
+\section{Linguaggio di definizione dei dati}%
+\label{sec:Linguaggio di definizione dei dati}
+Le relazioni possono essere definite tramite il comando $CREATE$, modificate
+tramite il comando $ALTER$ e cancellate tramite il comando $DROP$.
+Questi comandi sono i principali del \emph{DDL}.
+
+\subsection{Tipi di dato}%
+\label{sub:Tipi di dato}
+Vi sono quattro diverse categorie di tipi di dato, divisi a loro volta per
+sottocategorie:
+\begin{itemize}
+  \item tipi numerici;
+  \item tipi carattere;
+  \item tipi temporali;
+  \item tipi definiti dall'utente.
+\end{itemize}
+
+\subsubsection{Tipi numerici}%
+\label{ssub:Tipi numerici}
+Sono classificati in \textit{tipi numerici esatti} e \textit{tipi numerici
+approssimati}.
+
+\paragraph{Tipi numerici esatti}%
+\label{par:Tipi numerici esatti}
+\begin{itemize}
+  \item \textbf{INTEGER:} rappresenta i valori interi, la precisione varia a
+    seconda della specifica implementazione di SQL;
+  \item \textbf{SMALLINT:} rappresenta i valori interi, deve essere meno preciso
+    di INTEGER;
+  \item \textbf{BIGINT:} rappresenta i valori interi, deve essere più preciso di
+    INTEGER;
+  \item \textbf{NUMERIC:} tipo di dato caratterizzato da una precisione (numero
+    totale di cifre) e da una scala (numero di cifre dopo la virgola decimale),
+    la specifica ha forma $NUMERIC[(p[,s])]$, dove i predefiniti sono $p=1$ e
+    $s=0$;
+  \item \textbf{DECIMAL:} analogo a $NUMERIC$, differisce nella possibilità di
+    inserire numeri meno precisi rispetto a quanto definito.
+\end{itemize}
+
+\paragraph{Tipi numerici}%
+\label{par:Tipi numerici}
+\begin{itemize}
+  \item \textbf{REAL:} rappresenta valori a singola precisione in virgola
+    mobile, la precisione varia a seconda della specifica implementazione di
+    SQL;
+  \item \textbf{DOUBLE PRECISION:} rappresenta valori a singola precisione in
+    virgola mobile (solitamente a doppia precisione), più preciso rispetto a
+    $REAL$;
+  \item \textbf{FLOAT:} permette di richiedere la precisione desiderata, ha
+    forma $FLOAT[(p)]$, la precisione minima è $1$, la precisione di default e
+    la massima variano a seconda dell'implementazione di SQL.
+\end{itemize}
+
+\paragraph{Tipi di carattere}%
+\label{par:Tipi di carattere}
+\begin{itemize}
+  \item \textbf{CHARACTER:} permette definire stringhe di caratteri di lunghezza
+    predefinita nella forma $CHAR(n)$, la stringa viene completata con spazi
+    vuoti, il valore di default di $n$ è $1$;
+  \item \textbf{CHARACTER VARYING:} permette di definire stringhe di caratteri
+    di una lunghezza massima predefinita, di forma $VARCHAR(n)$, differisce da
+    $CHAR$ nella possibilità di non dover occupare tutto lo spazio allocato.
+\end{itemize}
+
+\paragraph{Tipi temporali}%
+\label{par:Tipi temporali}
+\begin{itemize}
+  \item \textbf{DATE:} rappresenta le date espresse come anno ($4$ cifre), mese
+    ($2$ cifre) e giorno ($2$ cifre), sono disponibili diversi formati di
+    rappresentazione;
+  \item \textbf{TIME:} rappresenta i tempi espressi come ora ($2$ cifre), minuto
+    ($2$ cifre) e secondo ($2$ cifre), la specifica ha forma $TIME[(p)]$ dove
+    $p$ è l'eventuale numero di cifre frazionarie cui si è interessati ($6$
+    cifre, microsecondo);
+  \item \textbf{TIMESTAMP:} rappresenta una concatenazione dei tipi di dato
+    $DATE$ e $TIME$, la specifica è $TIMESTAMP[(p)]$;
+  \item \textbf{INTERVAL:} rappresenta una durata temporale in riferimento ad
+    uno o più qualificatori tra $YEAR$, $MONTH$, $DAY$, $HOUR$, $MINUTE$ e
+    $SECOND$, i valori di questo tipo sono rappresentati dalla parola chiave
+    $INTERVAL$ seguita da una stringa che caratterizza la durata in termini di
+    uno o più qualificatori.
+\end{itemize}
+
+\paragraph{Altri tipi definiti}%
+\label{par:Altri tipi definiti}
+\begin{itemize}
+  \item \textbf{BOOLEAN:} i cui valori sono $TRUE$, $FALSE$, $UNKOWN$;
+  \item \textbf{BLOB:} \emph{Binary Large OBject};
+  \item \textbf{CLOB:} \emph{Character Large Object}.
+\end{itemize}
