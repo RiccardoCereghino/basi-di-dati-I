@@ -88,3 +88,158 @@ approssimati}.
   \item \textbf{BLOB:} \emph{Binary Large OBject};
   \item \textbf{CLOB:} \emph{Character Large Object}.
 \end{itemize}
+
+\subsection{Creazione di relazioni}%
+\label{sub:Creazione di relazioni}
+In SQL la crezione di relazioni avviene in SQL tramite l'uso del comando
+\lstinline[language=SQL]{CREATE TABLE}
+
+\subsubsection{Specifica dello schema di una relazione}%
+\label{ssub:Specifica dello schema di una relazione}
+\begin{lstlisting}[
+  language=SQL,
+  escapeinside={(£}{£)},
+  caption={
+    Schema di creazione tabelle
+  }
+]
+CREATE TABLE <nome relazione>
+  (<specifica colonna> [,<specifica colonna>]*);
+\end{lstlisting}
+
+Dove:
+\begin{itemize}
+  \item \textbf{<nome relazione>:} è il nome della relazione che viene creata;
+  \item \textbf{<specifica colonna>:} è una specifica di colonna, il cui formato
+    è:
+    \begin{lstlisting}[
+      language=SQL,
+      escapeinside={(£}{£)}
+    ]
+<nome colonna> <dominio> [DEFAULT] <valore di default>
+    \end{lstlisting}
+    \begin{itemize}
+      \item \lstinline[language=SQL]{<nome colonna>} è il nome della colonna;
+      \item \lstinline[language=SQL]{<dominio>} è il dominio della colonna e
+        deve essere uno dei tipi di dato di SQL;
+      \item la clausola \lstinline[language=SQL]{DEFAULT} specifica un valore di
+        default per la colonna.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Vincoli di obbligatorietà, chiavi e chiavi esterne}%
+\label{ssub:Vincoli di obbligatorietà}
+SQL offre la possibilità di stabilire dei vincoli di obbligatorietà su colonne,
+chiavi e chiavi esterne; oltre a vincoli aggiuntivi specificabili sulle tuple
+della relazioni o colonne di queste tuple.
+
+\paragraph{Obbligatorietà di colonne}%
+\label{par:Obbligatorietà di colonne}
+Per la specifica dell'obbligatorietà di una colonna è sufficiente aggiungere
+\lstinline[language=SQL]{NOT NULL} alla specifica della colonna.
+
+\paragraph{Chiavi}%
+\label{par:Chiavi}
+La specifica delle chiavi si effettua in SQL mediante le parole chiave
+\lstinline[language=SQL]{UNIQUE} e \lstinline[language=SQL]{PRIMARY KEY}.
+
+La parola chiave \lstinline[language=SQL]{UNIQUE} garantisce che non esistano
+due tuple che condividano lo stesso valore.
+
+La parola chiave \lstinline[language=SQL]{PRIMARY KEY} impone sia che i valori
+non siano nulli e che non esistano due tuple che condividano lo stesso valore.
+
+\paragraph{Chiavi esterne}%
+\label{par:Chiavi esterne}
+La specifica di chiavi esterne avviene mediante la clausola
+\lstinline[language=SQL]{FOREIGN_KEY} ed il comando
+\lstinline[language=SQL]{CREATE TABLE}, la clausola è opzionale e ripetibile.
+
+\begin{lstlisting}[
+  language=SQL,
+  escapeinside={(£}{£)},
+  caption={
+    Sintassi per le chiavi esterne
+  }
+]
+FOREIGN_KEY (<lista nomi colonne>)
+  REFERENCES <nome relazione>
+  [ON DELETE {NO ACTION | CASCADE | SET NULL | SET DEFAULT}]
+  [ON UPDATE {NO ACTION | CASCADE | SET NULL | SET DEFAULT}]
+\end{lstlisting}
+
+Definisce:
+\begin{itemize}
+  \item una lista di una o più colonne che costituiscono una chiave esterna
+    della relazione $R$;
+  \item la relazione riferita $R^\prime$ di cui le suddette colonne sono chiave
+    primaria;
+  \item l'azione da eseguire se una tupla della relazione riferita è cancellata
+    ed esistono tuple in $R$ che fanno riferimento a tale tupla, l'opzione di
+    default è \lstinline[language=SQL]{NO ACTION}, le opzioni sono:
+    \begin{itemize}
+      \item \lstinline[language=SQL]{NO ACTION} la cancellazione di una tupla
+        dalla relazione riferita è eseguita solo se non esiste alcuna tupla in
+        $R$ che fa riferimento a tale tupla;
+      \item \lstinline[language=SQL]{CASCADE} la cancellazione della dupla della
+        relazione riferita implica la cancellazione di tutte le tuple di $R$ che
+        fanno riferimento a tale tupla;
+      \item \lstinline[language=SQL]{SET NULL} la cancellazione della tupla
+        della relazione riferita implica che, in tutte le tuple di $R$ che fanno
+        riferimento a tale tupla, il valore della chiave esterna viene posto
+        uguale al valore nullo;
+      \item \lstinline[language=SQL]{SET DEFAULT} la cancellazione della tupla
+        della relazione riferita implica che, in tutte le tuple di $R$ che fanno
+        riferimento a tale tupla, il valore della chiave esterna viene posto
+        uguale al valore di default specificato per le colonne che costituiscono
+        la chiave esterna.
+    \end{itemize}
+  \item l'azione da eseguire specificata nella clausola
+    \lstinline[language=SQL]{ON UPDATE} se la chiave primaria di una tupla della
+    relazione riferita viene modificata ed esistono tuple in $R$ che fanno
+    riferimento a tale tupla, le azioni possibili sono le stesse precedenti,
+    eccezione per l'opzione \lstinline[language=SQL]{CASCADE}, la quale ha
+    l'effetto di assegnare il nuovo valore della chiave primaria di
+    quest'ultima.
+\end{itemize}
+
+\subsection{Cancellazione e modifica di relazioni}%
+\label{sub:Cancellazione e modifica di relazioni}
+La cancellazione di una relazione è eseguita con la sintassi:
+\begin{lstlisting}[
+  language=SQL,
+  escapeinside={(£}{£)},
+  caption={
+    Cancellazione di relazioni
+  }
+]
+DROP TABLE <nome relazione> {RESTRICT | CASCADE}
+\end{lstlisting}
+
+Si rende necessario specificare aun opzione:
+\begin{itemize}
+  \item \lstinline[language=SQL]{RESTRICT} la relazione viene cancellata solo se
+    non è riferita da altri elementi dello schema della base di dati;
+  \item \lstinline[language=SQL]{CASCADE} elimina la relazione e tutti gli
+    elementi dello schema che la riferiscono.
+\end{itemize}
+
+\begin{lstlisting}[
+  language=SQL,
+  escapeinside={(£}{£)},
+  caption={
+    Modifica di relazioni
+  }
+]
+ALTER TABLE <nome relazione> <modifica>;
+
+-- aggiunta di una colonna
+ADD [COLUMN] <specifica colonna>
+
+-- modifica di una colonna
+ALTER [COLUMN] {SET DEFAULT <valore default> | DROP DEFAULT}
+
+-- eliminazione di una colonna
+DROP [COLUMN] <nome colonna> {RESTRICT | CASCADE}
+\end{lstlisting}
+
