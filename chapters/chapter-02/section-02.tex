@@ -1,0 +1,54 @@
+\section{Algebra relazionale}%
+\label{sec:Algebra relazionale}
+L'algebra relazionale è costituita da $5$ operazioni per la manipolazione
+delle relazioni:
+\begin{itemize}
+  \item proiezione;
+  \item selezione;
+  \item prodotto cartesiano;
+  \item unione;
+  \item differenza.
+\end{itemize}
+
+Ogni operazione ha come argomento una o più relazioni.
+Esistono operazioni addizionali che possono essere espresse in termini delle
+operazioni di base.
+
+\subsection{Operazioni di base}%
+\label{sub:Operazioni di base}
+Sicchè facciamo riferimento alla notazione con nome, introduciamo l'operazione
+di ridenominazione.
+
+\paragraph{Ridenominazione}%
+\label{par:Ridenominazione}
+La ridenominazione di una relazione $R$ rispetto ad una lista di coppie di nomi
+di attributi $(A_1,B_1),\dots,(A_m,B_m)$, tale che $A_i\in U_R$ è un nome di
+attributo di $R$ indicata con $\rho_{A_1,\dots,A_m\leftarrow B_1,\dots B_m}(R)$,
+ridenomina l'attributo di nome $A_i$ con il nome $B_i$, $i=1,\dots,m$.
+
+La ridenominazione è corretta se il nuovo schema di relazione per $R$ ha
+attributi con nomi tutti distinti.
+La relazione ottenuta ha lo stesso grado della relazione $R$ ed ha lo stesso
+contenuto.
+Gli attributi della relazione risultato sono
+$U_R\backslash\{A_1,\dots,A_m\}\cup\{B_1,\dots,B_m\}$.
+
+\paragraph{Proiezione}%
+\label{par:Proiezione}
+La proiezione di una relazione $R$ su un insieme $A=\{A_1,\dots,A_m\}\subseteq
+U_R$ di nomi di attributi di $R$, indicata con $\Pi_{A_1,\dots,A_m}\subseteq
+(R)$, è una relazione di grado $m$ le cui tuple hanno come attributi solo gli
+attributi specificati in $A$.
+Pertanto la proiezione genera un insieme $T$ di tuple con $m$ attributi.
+Sia $t=[A_1:v_1,\dots A_m:v_m]$ una tupla in $T$; $t$ è tale che esiste una
+tupla $t^\prime$ in $R$ tale che $t[A]=t^\prime[A]$.
+Nella relazione risultato gli attributi compaiono secondo l'ordine specificato
+in $A$; è pertanto possibile specificare operazioni di proiezione che permutano
+gli attributi di una relazione.
+La proiezione permette di estrarre da una relazione solo alcune delle
+informazioni in essa contenute, eliminando gli attributi al cui valore non siano
+interessati.
+La relazione risultato, oltre ad avere un grado inferiore a quello della
+relazione argomento, può anche avere cardinalità inferiore a quella della
+relazione argomento, poichè eliminando alcunti attributi possono venire generate
+delle tuple duplicate che compariranno una sola volta nella relazione risultato.
