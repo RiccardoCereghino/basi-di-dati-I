@@ -52,3 +52,116 @@ La relazione risultato, oltre ad avere un grado inferiore a quello della
 relazione argomento, può anche avere cardinalità inferiore a quella della
 relazione argomento, poichè eliminando alcunti attributi possono venire generate
 delle tuple duplicate che compariranno una sola volta nella relazione risultato.
+
+\paragraph{Selezione}%
+\label{par:Selezione}
+La selezione su una relazione $R$, dato un predicato $F$ su $R$, indicata con
+$\sigma_F(R)$, genera una relazione che contiene tutte le tuple di $R$ che
+verificano $F$.
+Un predicato $F$ su $R$ è un predicato semplice su $R$, oppure una combinazione
+booleana, ottenuta mediante gli operatori booleani $\wedge$, $\vee$, $\neg$, di
+predicati semplici su $R$.
+Un predicato semplice su $R$ i cui domini devono essere compatibili; $op$ è un
+operatore relazionale di confronto ed appartiene all'insieme
+$\{<,=,>,\geq,\leq\}$; $v$ è un valore costante compatibile con il dominio
+$A$.
+
+Se il grado della relazione operando $R$ è $k$, la selezione $\sigma_F(R)$
+genera un insieme $T$ di tuple di grado $k$ (sottoinsieme di $R$). Quindi lo
+scema (ed il grado) della relazione risultato sono uguali a quelli della
+relaione operando.
+
+\paragraph{Prodotto cartesiano}%
+\label{par:Prodotto cartesiano}
+Il prodotto cartesiano di due relazioni $R$ ed $S$, di grado rispettivamente
+$k_1$ e $k_2$, indicato con $R\times S$, è una relazione di grado $k_1+k_2$ le
+cui tuple sono tutte le possibili tuple ch hanno:
+\begin{itemize}
+  \item come prime $k_1$ componenti tuple di $R$;
+  \item come ultime $k_2$ componenti tuple di $S$.
+\end{itemize}
+
+Il prodotto cartesiano può essere applicato solo se le due relazioni $R$ ed $S$
+hanno schemi disgiunti. Nella relazione risultato i primi $k_1$attributi sono
+gli attributi della relazione $R$, gli ultimi $k_2$ attributi sono gli attributi
+della relazione $S$.
+Il prodotto cartesiano permette di costruire nuove tuple combinando le
+informazioni presenti nelle tuple delle relazioni argomento.
+Poichè ogni tupla di $R$ viene combinata con ogni tupla di $S$, la cardinalità
+del risultato è il ptodotto delle cardinalità degli argomenti.
+
+\paragraph{Unione}%
+\label{par:Unione}
+L'unione delle relazioni $R$ ed $S$, indicata con $R\cup S$, è l'insieme delle
+tuple che sono in $R$ ed in $S$.
+L'unione delle relazioni può essere eseguita solo se le relazioni hanno lo
+stesso schema.
+La relazione risultato ha lo stesso schema delle relazioni argomento.
+Essendo l'unione un'operazione tra insiemi, le tuple duplicate vengono eliminate
+dal risultato.
+
+\paragraph{Differenza}%
+\label{par:Differenza}
+La differenza delle relazioni $R$ ed $S$, indicata con $R-S$, è l'insieme delle
+tuple che sono in $R$ ma non in $S$.
+La differenza, come l'unione, di due relazioni può essere eseguita solo se le
+relazioni hanno lo stesso schema e produce una relazione con lo stesso schema.
+Se le relazioni hanno attributi con nomi diversi, si applica quanto già detto
+per l'unione.
+
+\subsection{Operazioni derivate}%
+\label{sub:Operazioni derivate}
+Le operazioni derivate sono definite attraverso le operazioni di base.
+
+\paragraph{Intersezione}%
+\label{par:Intersezione}
+L'intersezione di due relazioni $R$ ed $S$ è denotata con $R\cap S$ ed è
+espressa come $R-(R-S)$.
+L'intersezione di $R$ ed $S$ restituisce le tuple che sono sia in $R$ che in
+$S$. L'intersezione può essere eseguita solo se le relazioni hanno lo stesso
+schema e produuce una relazione con lo stesso schema.
+
+\paragraph{Join}%
+\label{par:Join}
+Il join (detto anche \textit{theta-join}) di due relazioni $R$ ed $S$ sugli
+attributi $A$ di $R$ ed $A^\prime$ di $S$, indicato con $R^{\bowtie}_{A\Theta
+A^\prime}S$, dove $\Theta$ è un operatore relazionale di confronto, è definito
+dall'espressione algebrica $\sigma_{A\Theta A^\prime}(R\times S)$.
+Il join è perdanto un prodotto cartesiano seguito da una selezione; il predicato
+$A\Theta A^\prime$ è detto predicato di join.
+Come per il prodotto cartesiano, gli schemi delle due relazioni argomento devono
+essere disgiunti e lo schema della relazione risultato è dato dalla loro unione.
+
+Il join permette di collegare tuple di relazioni diverse e di attraversare le
+associazioni rappresentate nelle relazioni della base di dati mediante il
+meccanismo delle chiavi esterne.
+
+\paragraph{Join naturale}%
+\label{par:Join naturale}
+Rappresenta una semplificazione del join.
+Il join naturale di dure relazioni $R$ ed $S$, denotato come $R\bowtie S$, è
+definito come:
+
+sia $\{A_1,\dots,A_k\}=U_R\cap U_S$ l'insieme dei nomi di attributi presenti sia
+nello schema di $R$ sia in quello di $S$.
+Sia inoltre $\{I_1,\dots,I_k\}=U_R\cap U_S$ l'insieme dei nomi di attributo
+unione dell'insieme dei nomi degli attributi di $R$ e dell'insieme dei nomi
+degli attributi di $S$.
+Siano infine $\{B_1,\dots,B_k\}$ nomi di attributo non appartenenti nè ad $R$ nè
+ad $S$.
+
+L'espressione che definisce il join naturale è:
+\[
+  R\bowtie S=\Pi_{I_1,\dots,I_m}(\sigma_C(R\times(\rho_{A_1,\dots,A_k\leftarrow
+  B_1,\dots,B_k}(S))))
+\]
+
+dove $C$ è un predicato della forma $A_1=B_1\wedge A_2=B_2\wedge\dots\wedge
+A_k=B_k$.
+
+Pertanto il join naturale esegue un join eguagliando gli attributi con lo stesso
+nome delle due relazioni argomento dell'operazione e poi elimina gli attributi
+duplicati dalla relazione risultato.
+Si noti che, affinchè l'operazione di join sia ben definita, gli attributi con
+nomi uguali nelle relazioni argomento dell'operazione devono avere domini
+compatibili.
