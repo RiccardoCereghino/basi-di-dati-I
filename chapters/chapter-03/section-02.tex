@@ -1,0 +1,213 @@
+\section{Interrogazioni}%
+\label{sec:Interrogazioni}
+\subsection{SELECT}%
+\label{sub:SELECT}
+I comandi di interrogazione in SQL sono espressi tramite il comando
+\lstinline[language=SQL]{SELECT}, ha forma:
+\begin{lstlisting}[
+  language=SQL,
+  escapeinside={(£}{£)},
+  caption={
+    Forma del comando SELECT
+  }
+]
+SELECT {DISTINCT (£$ R_{i1}.C_1,\dots,R_{in}.C_n§*$£)}
+FROM (£$R_1,\dots,R_k WHERE F;$£)
+\end{lstlisting}
+
+Dove $R_i(i=1,\dots,k)$ è un nome di relazione. La clausola
+\lstinline[language=SQL]{FROM} specifica pertanto le relazioni oggetto
+dell'interrogazione.
+
+L'ordine in cui le colonne sono elencate nella clausola di priezione determina
+l'ordine da sinistra a destra secondo cui le colonne appaiono nella relazione
+risultato.
+
+La clausola di qualificazione può contenere i connettivi booleani
+\lstinline[language=SQL]{AND,OR,NOT}.
+
+\subsection{Operatori e funzioni}%
+\label{sub:Operatori e funzioni}
+SQL fornisce operatori aggiuntivi, oltre ai classici operatori relazionali di
+confronto.
+
+\subsubsection{Operatori di confronto}%
+\label{ssub:Operatori di confronto}
+\begin{itemize}
+  \item \lstinline[language=SQL]{BETWEEN}, condizione su intervalli di valori,
+    permette di trovare le tuple che contengono valori di una colonna in un
+    intervallo specificato;
+    \begin{lstlisting}[
+      language=SQL,
+      escapeinside={(£}{£)},
+      caption={
+        Esempio di BETWEEN
+      }
+    ]
+    SELECT * FROM Film WHERE anno BETWEEN 1995 AND 2000;
+    \end{lstlisting}
+    
+  \item \lstinline[language=SQL]{IN}, ricerca di valori in un insieme, permette
+    di determinare le tuple che contengono uno tra i valori di un insieme
+    specificato;
+    \begin{lstlisting}[
+      language=SQL,
+      escapeinside={(£}{£)},
+      caption={
+        Esempio di IN
+      }
+    ]
+    SELECT * FROM Film WHERE genere IN ('horror','fantascienza')
+    \end{lstlisting}
+    
+  \item \lstinline[language=SQL]{LIKE}, condizioni di confronto per stringhe di
+    caratteri, permette di eseguire alcune semplici operazioni di \emph{pattern
+    matching} su colonne di tipo stringa, il carattera speciale $\%$ denota una
+    sequenza di caratteri arbitrari di lunghezza qualsiasi, il simbolo $\_$
+    indica esattamente un carattere.
+    \begin{lstlisting}[
+      language=SQL,
+      escapeinside={(£}{£)},
+      caption={
+        Esempio di LIKE, match di stringhe il cui terzo carattere è d
+      }
+    ]
+    SELECT * FROM Film WHERE titolo LIKE '__d%';
+    \end{lstlisting}
+\end{itemize}
+
+\subsubsection{Espressioni e funzioni}%
+\label{ssub:Espressioni e funzioni}
+Le espressioni possono essere formulate applicanto funzioni alle colonne delle
+tuple, usate nei predicati o comparire nella clausola di proiezione delle
+interrogazioni nelle espressioni di \lstinline[language=SQL]{UPDATE}; sono
+applicate su colonne \emph{virtuali}.
+
+\paragraph{Espressioni e funzioni aritmetiche}%
+\label{par:Espressioni e funzioni aritmetiche}
+Oltre agli operatori aritmetici di base sono previste le funzioni:
+\begin{itemize}
+  \item \lstinline[language=SQL]{ABS(n)} che ha come argomento un valore
+    numerico $n$ e ne calcola il valore assoluto;
+  \item \lstinline[language=SQL]{MOD(n,b)} che ha come argomenti due valori
+    interi $n,b$, e calcola il resto dell'intero della divisione di $n$ per $b$.
+\end{itemize}
+
+\paragraph{Espressioni e funzioni per stringhe}%
+\label{par:Espressioni e funzioni per stringhe}
+Il principale operatore tra stringhe è l'operatore di concatenazione $||$, sono
+inoltre previste le funzioni:
+\begin{itemize}
+  \item \lstinline[language=SQL]{LENGTH(str)};
+  \item \lstinline[language=SQL]{UPPER(str)},
+    \lstinline[language=SQL]{LOWER(str)};
+  \item \lstinline[language=SQL]{SUBSTR(str,m[,n])};
+  \item \lstinline[language=SQL]{TRIM [str1] FROM str2}
+\end{itemize}
+
+\paragraph{Espressioni e funzioni per date e tempi}%
+\label{par:Espressioni e funzioni per date e tempi}
+\begin{itemize}
+  \item \lstinline[language=SQL]{CURRENT_DATE};
+  \item \lstinline[language=SQL]{CURRENT_TIME};
+  \item \lstinline[language=SQL]{CURRENT_TIMESTAMP};
+  \item \lstinline[language=SQL]{EXTRACT q FROM e}, estrae il campo
+    corrispondente al qualificatore demprale $q$ dall'espressione $e$.
+\end{itemize}
+
+\subsection{Ordinamento del risultato di un'interrogazione}%
+\label{sub:Ordinamento del risultato di un'interrogazione}
+Il comando \lstinline[language=SQL]{SELECT} prevede la clausola addizionale
+\lstinline[language=SQL]{ORDER BY} per determinare le condizioni di ordinamento.
+
+L'ordinamento non è limitato nè ad una sola colonna nè ad un ordine crescente.
+\begin{lstlisting}[
+  language=SQL,
+  escapeinside={(£}{£)},
+  caption={
+    Esempio di ORDER BY
+  }
+]
+SELECT colloc, dataNo1, dataRest FROM Noleggio
+WHERE codCli = 6635
+ORDER BY dataNo1 DESC, colloc;
+\end{lstlisting}
+
+\subsection{Operazione di join}%
+\label{sub:Operazione di join}
+Tradizionalmente il join è espresso in SQL tramite un prodotto cartesiano a cui
+sono applicati uno o più predicatu du join, tra gli operatori troviamo:
+\begin{itemize}
+  \item \lstinline[language=SQL]{CROSS JOIN}, corrisponde al prodotto
+    cartesiano;
+  \item \lstinline[language=SQL]{JOIN ON}, corrisponde al theta-join;
+  \item \lstinline[language=SQL]{JOIN USING}, in cui viene richiesta
+    l'uguaglianza dei valori delle colonne specificate nella clausola
+    \lstinline[language=SQL]{USING};
+  \item \lstinline[language=SQL]{NATURAL JOIN}, corrisponde al join naturale, in
+    cui viene richiesta l'uguaglianza delle colonne che hanno lo stesso nome
+    nelle due relazioni.
+\end{itemize}
+\begin{lstlisting}[
+  language=SQL,
+  escapeinside={(£}{£)},
+  caption={
+    Esempi di JOIN
+  }
+]
+SELECT titolo FROM Video, Noleggio
+WHERE codCli = 6635 AND dataNo1 = DATE '15-Mar-2006'
+  AND Video.colloc = Noleggio.colloc;
+
+SELECT titolo FROM Video CROSS JOIN Noleggio
+WHERE codCli = 6635 AND dataNo1 = DATE '15-Mar-2006'
+  AND Video.colloc = Noleggio.colloc;
+
+SELECT titolo
+  FROM Video JOIN Noleggio
+    ON Video.colloc = Noleggio.colloc;
+WHERE codCli = 6635 AND dataNo1 = DATE '15-Mar-2006';
+
+SELECT titolo FROM Video JOIN Noleggio USING (colloc)
+WHERE codCli = 6635 AND dataNo1 = DATE '15-Mar-2006';
+
+SELECT titolo FROM Video NATURAL JOIN Noleggio
+WHERE codCli = 6635 AND dataNo1 = DATE '15-Mar-2006';
+\end{lstlisting}
+
+\paragraph{Outer join}%
+\label{par:Outer join}
+In \lstinline[language=SQL]{R JOIN S} non si ha traccia delle tuple di $R$ che
+non corrispondono ad alcuna tupla di $S$. Per questo motivo SQL prevede un
+operatore di \lstinline[language=SQL]{OUTER JOIN} che aggiunge al risultato le
+tuple di $R$ e/o $s$ che non hanno partecipato al join, completandole con
+$NULL$.
+
+L'operatore di join originario, per contrasto, viene anche detto
+\lstinline[language=SQL]{INNER JOIN}.
+
+Esistono diverse varianti dell'outer join, che vengono specificate permettendo
+il corrispondente qualificatore all'operatore
+\lstinline[language=SQL]{OUTER JOIN}.
+Consideriamo \lstinline[language=SQL]{R OUTER JOIN S}:
+\begin{itemize}
+  \item \lstinline[language=SQL]{FULL}, sia le tuple di $R$ sia quelle di $S$
+    che non partecipano al join vengono completate ed inserite nel risultato;
+  \item \lstinline[language=SQL]{LEFT}, le tuple di $R$ che non partecipano al
+    join vengono completate ed inserite nel risultato;
+  \item \lstinline[language=SQL]{RIGHT}, le tuple di $S$ che non partecipano al
+    join vengono completate ed inserite nel risultato.
+\end{itemize}
+
+\begin{lstlisting}[
+  language=SQL,
+  escapeinside={(£}{£)},
+  caption={
+    Esempio di OTER JOIN
+  }
+]
+SELECT colloc, titolo, codCli
+FROM Film NATURAL JOIN Video NATURAL LEFT OUTER JOIN Noleggio
+WHERE regista = 'tim burton' AND genere = 'fantastico';
+\end{lstlisting}
+
