@@ -1,0 +1,20 @@
+\chapter{Memorizzazione dei dati ed elaborazione delle interrogazioni}%
+\label{cha:Memorizzazione dei dati ed elaborazione delle interrogazioni}
+Le prestazioni di un DBMS dipendono dall'efficienza delle strutture dati e
+dall'efficienza del sistema nell'operare su tali strutture.
+A livelloi fisico le tuple sono memorizzate in record di file su memoria
+secondaria ed una manipolazione efficiente verrà garantita dall'uso di opportune
+tecniche di elaborazione delle interrogazioni.
+
+Per velocizzare la ricerca dei dati vengono in genere utilizzate particolari
+strutture di accesso, dette \emph{indici}, che consentono di accedere
+direttamente ai record corrispondenti alle tuple con un certo valore per un
+attributo, senza scandire l'intero contenuto del file.
+
+La scelta delle strutture di memorizzazione e di indicizzazione più efficienti
+dipende dal tipo di accessi che si eseguono sui dati; ogni DBMS ha le proprie
+strategie di implementazione di un modello di dati e le scelte dell'utente a
+questo proposito costituiscono la \emph{progettazione fisica della base di
+dati}.
+
+\subimport{./chapter-07/}{section-01.tex}

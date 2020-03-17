@@ -1,0 +1,46 @@
+\section{Architettura di un DBMS}%
+\label{sec:Architettura di un DBMS}
+Le basi di dati memorizzano in modo persistente grosse quantità di dati,
+memorizzate in memoria secondaria; per cui non possono essere elaborate
+direttamente dalla CPU, ma copiati in memoria principali in un \emph{buffer}.
+
+Quindi un DBMS è costituito da diverse componenti funzionali che includono:
+\begin{itemize}
+  \item \textbf{gestore dei file:} gestisce l'allocazione dello spazio su disco
+    e le strutture dati usate per rappresentare le informazioni memorizzate su
+    disco;
+  \item \textbf{gestore del buffer:} responsabile del trasferimento delle
+    informazioni tra disco e memoria principale;
+  \item \textbf{esecutore di interrogazioni:} responsabile dell'esecuzione delle
+    richieste utente e costituito da:
+    \begin{itemize}
+      \item \textbf{parser:} traduce i comandi del DDL e del DML in un formato
+        interno (\textit{parse tree});
+      \item \textbf{selezionatore del piano:} stabilisce il modo più efficiente
+        di processare una richiesta utente;
+      \item \textbf{esecutore del piano:} processa le richieste utente in
+        accordo al piano di esecuzione selezionato;
+    \end{itemize}
+  \item \textbf{gestore delle autorizzazioni:} controlla che gli utenti abbiano
+    gli opportuni diritti di accesso ai dati;
+  \item \textbf{gestore del ripristino:} assicura che la base di dati rimanga in
+    uno stato consistente a fronte di cadute o malfunzionamenti del sistema;
+  \item \textbf{gestore della concorrenza:} assicura che le esecuzioni
+    concorrenti di processi procedano senza conflitti.
+\end{itemize}
+
+Quindi il DBMS memorizza, oltre ai dati utente, anche dati di sistema, strutture
+ausiliarie di accesso a tali dati e dati statistici, utilizzati dal
+selezionatore del piano per determinare la migliore strategia di esecuzione.
+
+\subsection{Cataloghi di sistema}%
+\label{sub:Cataloghi di sistema}
+Un DBMS sdescrive i dati che gestisce, incluse le informazioni sullo schema
+della base di dati e gli indici, tramite \emph{meta-dati} che, sono memorizzate
+in relazioni speciali dette \emph{cataloghi di sistema}, utilizzati dalle
+diverse componenti del DBMS.
+
+Un aspetto elegante di un DBMS relazionale è che i cataloghi di sistema sono
+essi stessi relazioni.
+Anche i cataloghi di sistema permettono l'interrogazione e le techiche per
+l'implementazione e la gestione di relazioni.
