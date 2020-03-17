@@ -1,0 +1,25 @@
+\section{Controllo dell'accesso}%
+\label{sec:Controllo dell'accesso}
+Il controllo dell'accesso regola le operazioni che è possibile compiere sui dati
+e le risorse in una base di dati; lo scome è di limitare e controllare le
+operazioni che gli utenti, già riconosciuto dal meccanismo di autenticazione,
+effettuano, prevenendo azioni accidentali o deliberate che potrebbero
+compromettere la correttezza e la sicurezza dei dati.
+
+Nel controllo dell'accesso distinguiamo tre entità fondamentali: gli oggetti, i
+soggetti ed i privilegi.
+
+I soggetti possono essere ulteriormente classificati in: utenti, gruppi e ruoli.
+
+La concessione o meno di un determinato accesso deve rispecchiare le
+\emph{politiche di sicurezza} dell'organizzazione.
+
+Le autorizzazioni possono essere rappresentate mediante una tupla $(s,o,p)$ dove
+$s$ p il soggetto, $o$ l'oggetto e $p$ il privilegio.
+
+Il controllo dell'accesso è effettuato mediante il meccanismo di
+\emph{constrollo dell'accesso}, basato su un \emph{modello di controllo
+dell'accesso}, (\emph{reference monitor}) il cui compito è di intercettare ogni
+comando inviato al DBMS e stabilire, tramite l'analisi delle autorizzazioni, se
+il soggetto richiedente puà essere autorizzato o meno a compiere l'azione
+richiesta.
