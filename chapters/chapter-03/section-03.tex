@@ -1,0 +1,128 @@
+\section{Funzioni di gruppo}%
+\label{sec:Funzioni di gruppo}
+La possibilità di estrarre tuple di una relazione è data dalle funzioni di
+gruppo e dall'operatore di raggruppamento.
+
+\subsection{Funzioni di gruppo}%
+\label{sub:Funzioni di gruppo}
+Le funzioni di gruppo, o \emph{funzioni aggregate}, possono essere utilizzate
+nella clausola di proiezione di un interrogazione e permettono di estrarre
+informazioni riassuntive da insiemi di valori.
+
+Una funzione di gruppo si applica all'iinsieme dei valori estratti dalle tuple
+che soddisfano la clausola di qualificazione dell'interrogazioni.
+Le principali funzioni di gruppo previste da SQL sono:
+\begin{itemize}
+  \item \lstinline[language=SQL]{MAX}, determina il massimo in un insieme di
+    valori;
+  \item \lstinline[language=SQL]{MIN}, determina il minimo in un insieme di
+    valori;
+  \item \lstinline[language=SQL]{SUM}, esegue la somma dei valori in un insieme;
+  \item \lstinline[language=SQL]{AVG}, esegue la media dei valori in un insieme;
+  \item \lstinline[language=SQL]{COUNT}, determina la cardinalità di un insieme:
+  \item \lstinline[language=SQL]{STDEV}, esegue il calcolo della deviazione
+    standard;
+  \item \lstinline[language=SQL]{VAR}, esegue il calcolo della varianza.
+\end{itemize}
+
+Le funzioni \lstinline[language=SQL]{SUM,AVG,COUNT,STDEV} sono
+applicate solo per insiemi di valori numerici, mentre le altre possono essere
+applicate anche ad altri insiemi di valori.
+
+Ad eccezione della funzione \lstinline[language=SQL]{COUNT}, le funzioni devono
+operare solo su insiemi di valori semplici, mentre
+\lstinline[language=SQL]{COUNT} prende come argomenti:
+\begin{enumerate}
+  \item \textbf{un nome di colonna:} in tal caso la funzione restituisce il
+    numero di valori non nulli presenti nella colonna;
+  \item \textbf{un nome di colonna preceduto dal qualificatore DISTINCT:} in tal
+    caso la funzione restituisce il numero di valori distinti e non nulli
+    presenti nella colonna;
+  \item \textbf{il carattere speciale $*$:} in tal caso la funzione restituisce
+    il numero di tuple.
+\end{enumerate}
+
+Le colonne della relazione risultato ottenute dall'applicazione di funzioni di
+gruppo sono colonne virtuali; per default verrà assegnato il nome della funzione
+usata nel calcolo della colonna.
+
+\subsection{Raggruppamento}%
+\label{sub:Raggruppamento}
+L'operatore di raggruppamento permette di suddividere le tuple di una relazione
+in base al valore di una o più colonne di ttale relazione. Le colonne da usare
+nel partizionamento sono specificate in un'apposita clausola
+\lstinline[language=SQL]{GROUP BY} del comando \lstinline[language=SQL]{SELECT}.
+
+Le tuple su cui si esegue il partizionamento sono solo le tuple che verificano
+la clausola di qualificazione del comando \lstinline[language=SQL]{SELECT}.
+Le tuple che non verificano tale clausola non partecipano al partizionamento.
+
+Il risultato di un comando \lstinline[language=SQL]{SELECT} che contiene la
+clausola di raggruppamento contiene tante tuple quanti sono i gruppi di tuple
+risultanti dal partizionamento.
+La clausola di proiezione di un'interrogazione contenente una clausola
+\lstinline[language=SQL]{GROUP BY} può includere solamente colonne che compaiono
+nella clausola \lstinline[language=SQL]{GROUP BY} oppure nelle funzioni di
+gruppo. Non è invece possibile includere in tale clausola colonne delle
+relazioni che non compaiono nella clausola \lstinline[language=SQL]{GROUP BY}.
+
+Una volta raggruppate le tuple, infatti, si perde la possibilità di riferire il
+valore di tali colonne delle tuple originarie: il risultato contiene una sola
+tupla per ogni gruppo mentre le singole colonne delle tuple nel gruppo possono
+contenere diversi valori.
+
+Il raggruppamento piò essere applicato a relazioni ottenute come risultato di
+operazioni di join. In particolare, la clausola 
+\lstinline[language=SQL]{GROUP BY} può avere come argomenti colonne di relazioni
+diverse, tra quelle che partecipano all'operazione di join.
+
+SQL prevede inoltre la possibilità di specificare condizioni di ricerca su
+gruppo di tuple. Queste condizioni di ricerca permettono di scartare alcuni dei
+gruppi ricavati dal partizionamento ottenuto in base alla clausola
+\lstinline[language=SQL]{GROUP BY}.
+Condizioni di ricerca su gruppi di tuple sono specificate nell'apposita clausola
+\lstinline[language=SQL]{HAVING}, la condizione di ricerca può essere una
+combinazione booleana di più predicati.
+
+Tali predicati possono essere solo predicati che coinvolgono funzioni di gruppo.
+La clausola \lstinline[language=SQL]{HAVING}, infatti, non può contenere
+condizioni sui valori delle colonne delle singole tuple.
+
+\subsection{Valori nulli}%
+\label{sub:Valori nulli}
+Una o più tuple possono, in un interrogazione, contenere valori nulli, per cui
+SQL utilizza una logica booleana di tre valori che sono:
+\lstinline[language=SQL]{TRUE(T),FALSE(F),UKNOWN(?)}.
+
+Nelle espressioni se un argomento è \lstinline[language=SQL]{NULL}, il valore
+dell'intera espressione sarà \lstinline[language=SQL]{NULL}, mentre in una
+funzione di gruppo tali valori verranno esclusi.
+
+\subsection{Sotto-interrogazioni}%
+\label{sub:Sotto-interrogazioni}
+La clausola \lstinline[language=SQL]{WHERE}, detta inerrogazione esterna, può
+contenere un'altra interrogazione, detta sotto-interrogazione
+(\textit{subquery}).
+
+Ogni sotto-interrogazione restituisce un solo valore, dette sotto-interrogazioni
+scalari; se venisse restituita più di una tupla verrebbe generato un errore a
+run-time.
+
+Se nessun valore venisse restituito verrebbe tornato
+\lstinline[language=SQL]{NULL}.
+
+Se più di un valore venisse restituite è necessario specificare come tali valori
+devono essere usati nel predicato, per cui sono introdotti i quantificatori
+\lstinline[language=SQL]{ANY,ALL} che sono inseriti tra l'operatore di confronto
+e la sotto-interrogazione.
+
+\lstinline[language=SQL]{ANY} restituisce il valore di verità $T$ quando la
+valutazione di confronto restituisce $T$ su almeno una delle tuple e $F$ se
+nessuna tupla viene restituita.
+
+\lstinline[language=SQL]{ALL} restituisce $T$ se tutte le tuple restituiscono
+$T$ e se nessuna tupla viene restituita restituisce $T$.
+
+Si può selezionare più di una colonna tramite una sotto-interrogazione e una
+sotto-interrogazione può includere nella propria condizione di ricerca un'altra
+sotto-interrogazione.
